@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學生會競選特刊 - Puerto 號外</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .newspaper-container {
+            background-color: #ffffff; /* White paper background */
+            border: 2px solid #333;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            width: 100%;
+            padding: 25px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            overflow: hidden; /* Ensure columns behave correctly */
+        }
+        .newspaper-header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 3px double #333;
+            padding-bottom: 15px;
+        }
+        .newspaper-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 3.8rem; /* Larger for impact */
+            font-weight: 700;
+            color: #b91c1c; /* Red for "號外" */
+            line-height: 1;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .newspaper-subtitle {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+        .issue-info {
+            font-size: 0.9rem;
+            color: #555;
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            padding-right: 5px;
+        }
+        .article-body {
+            column-count: 1; /* Default to 1 column on small screens */
+            column-gap: 30px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #333;
+            text-align: justify;
+        }
+        .article-body h2 { /* Main article title */
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-top: 0;
+            margin-bottom: 20px;
+            line-height: 1.3;
+            text-align: center;
+            break-after: avoid; /* Avoid breaking main title */
+        }
+        .article-body h3 { /* Subheadings within the article */
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            line-height: 1.3;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            break-after: avoid; /* Keep heading with next paragraph */
+        }
+        .article-body p {
+            margin-bottom: 15px;
+        }
+        .article-body strong {
+            color: #1a202c;
+        }
+
+        /* Image styling */
+        .article-body figure {
+            margin: 0;
+            margin-bottom: 15px;
+            break-inside: avoid-column; /* Prevent figures from breaking across columns */
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .article-body figure img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            padding: 3px;
+            background-color: #fff;
+            display: block;
+            margin: 0 auto 5px auto;
+        }
+        .article-body figcaption {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        /* Floating image for the main article */
+        .article-body figure.main-article-image {
+            float: right;
+            margin-left: 25px;
+            width: 320px; /* Larger image for main article */
+            max-width: 45%; /* Max width relative to column */
+        }
+        .article-body .clear-float {
+            clear: both;
+            margin-bottom: 0;
+        }
+
+        /* Responsive columns for larger screens */
+        @media (min-width: 768px) {
+            .article-body {
+                column-count: 2; /* 2 columns on medium screens */
+            }
+        }
+        @media (min-width: 1024px) {
+            .article-body {
+                column-count: 2; /* Still 2 columns on large screens */
+            }
+        }
+
+        /* --- START: PRINT-SPECIFIC STYLES --- */
+        @media print {
+            body {
+                background-color: #fff !important;
+                padding: 0;
+                margin: 0;
+                display: block;
+                min-height: auto;
+            }
+            .newspaper-container {
+                border: none !important;
+                box-shadow: none !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 15mm !important; /* A4 standard margins */
+                border-radius: 0 !important;
+                overflow: visible !important;
+                margin: 0 auto;
+            }
+            .newspaper-header {
+                margin-bottom: 10mm;
+                border-bottom: 2px solid #000;
+                padding-bottom: 8mm;
+            }
+            .newspaper-title {
+                font-size: 2.5rem !important;
+                color: #000 !important;
+                text-shadow: none !important;
+                margin-bottom: 5mm !important;
+            }
+            .newspaper-subtitle {
+                font-size: 1.5rem !important;
+                color: #000 !important;
+                margin-bottom: 8mm !important;
+            }
+            .issue-info {
+                font-size: 0.8rem !important;
+                color: #333 !important;
+                margin-top: 2mm;
+                margin-bottom: 8mm;
+            }
+            .article-body {
+                column-count: 2 !important;
+                column-gap: 15mm !important;
+                line-height: 1.5 !important;
+                font-size: 0.95rem !important;
+                color: #000 !important;
+                text-align: justify;
+            }
+            .article-body h2 {
+                font-size: 1.8rem !important;
+                margin-bottom: 15mm !important;
+                color: #000 !important;
+                break-before: auto !important; /* Don't force new column for main title */
+                text-align: center !important;
+            }
+            .article-body h3 {
+                font-size: 1.15rem !important;
+                margin-top: 12mm !important;
+                margin-bottom: 6mm !important;
+                border-bottom: 1px solid #000 !important;
+                padding-bottom: 3mm !important;
+                break-before: column; /* Try to start new headings in a new column */
+                page-break-after: avoid;
+            }
+            .article-body p {
+                margin-bottom: 8mm !important;
+                page-break-inside: avoid;
+            }
+            .article-body figure {
+                margin-bottom: 8mm !important;
+                float: none !important; /* Disable float for print */
+                width: 90% !important; /* Make images take more width */
+                max-width: 90% !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                page-break-inside: avoid;
+            }
+            .article-body figure img {
+                border: 1px solid #000 !important;
+                padding: 1px !important;
+                background-color: #fff !important;
+            }
+            .article-body figcaption {
+                font-size: 0.8rem !important;
+                color: #333 !important;
+            }
+            .article-body .clear-float {
+                display: none !important;
+            }
+            .article-body p:last-of-type {
+                margin-bottom: 0 !important;
+            }
+        }
+        /* --- END: PRINT-SPECIFIC STYLES --- */
+    </style>
+</head>
+<body>
+    <div class="newspaper-container rounded-lg shadow-lg">
+        <div class="newspaper-header">
+            <div class="newspaper-title">號外！</div>
+            <div class="newspaper-subtitle">
+                學生會競選特刊：Puerto 內閣專訪
+            </div>
+        </div>
+        <div class="issue-info">
+            發行日期：2025年6月2日 &nbsp;&nbsp; 第001期
+        </div>
+
+        <div class="article-body">
+            <h2>Puerto 內閣：你的聲音，我們的行動！用「心」打造全新校園體驗！</h2>
+
+            <figure class="main-article-image">
+                <img src="https://raw.github.com/lstclhng/lstcstudentunion2025_/blob/1685efbb4c37370a97a556df19d991ff4d986912/chairpeople_.JPG" alt="Puerto 內閣成員吳佳艷和丁靜雯的合照，展現團隊精神。">
+                <figcaption>圖：Puerto 內閣成員吳佳艷（左）和丁靜雯（右），準備為學生服務。</figcaption>
+            </figure>
+            <p>（香港，2025年6月2日） 學生會競選戰火正酣！今年，由會長候選人吳佳艷和副會長候選人丁靜雯領軍的 Puerto 內閣，以「學生自治平台」為核心理念，承諾為全體師生帶來一場「有溫度、有深度」的校園革新！他們不只提供服務，更要成為你我校園生活的共同協創者！</p>
+
+            <h3>不只辦活動，更要培育未來領袖！</h3>
+            <p>別以為學生會只會辦些吃喝玩樂的活動，Puerto 內閣的願景可遠不止於此！副會長丁靜雯和會長吳佳艷強調，他們相信學生會是培養未來領袖的搖籃。丁靜雯憑藉自身豐富的社幹事、現任學生會成員和學會幹事經驗，信心滿滿地表示，內閣將能舉辦「更優良、更完善的活動」，並帶來「更多創新想法」，讓每一場活動都成為同學成長的契機。</p>
+            <p>吳佳艷更點出了學生會的深層意義：「它不只代表學生向校方傳達訴求，更要促進學生的全面發展，培養大家的領導力和社會責任感！」想像一下，未來的校園，不僅有精彩活動，還有機會讓你展現潛能，成為校園事務的主導者！</p>
+            <div class="clear-float"></div> <h3>拒絕「盲盒」福利！你的需求，我們都聽見！</h3>
+            <p>許多同學最關心的莫過於學生會能帶來什麼「福利」？Puerto 內閣給出了最直接的承諾：你的聲音，就是我們的福利藍圖！ 吳佳艷表明，他們將設立方便快捷的意見收集箱和線上提問檔案，讓所有師生都能暢所欲言，提出希望的福利、活動，甚至是對校園設施或政策的建議。</p>
+            <p>「我們不會搞『盲盒』福利，一切都是為同學量身打造！」吳佳艷說。丁靜雯也強調，在決策過程中，他們會「聆聽每個持份者的意見」，並努力「平衡學生和老師提出的建議」，確保最終的政策和活動，都是大家共同的選擇。這意味著，你不再是被動的接受者，而是校園福利的積極設計師！</p>
+
+            <h3>透明公開！每一分錢都花得明明白白！</h3>
+            <p>學生會經費的透明度一直是大家關注的焦點。Puerto 內閣在這方面給出了最高規格的承諾！丁靜雯鄭重表示，每次會議的討論內容，包括活動詳情、政策規劃和支出預算，都將被詳細記錄並定期公開。</p>
+            <p>吳佳艷更補充：「經費使用的透明性，是學生會最基本的執行義務！」她承諾，每一筆財務支出都會被詳細記錄，並在學年結束時公開年度決算報告，讓所有師生都能清楚查閱，確保每分錢都用得其所，真正做到「賬目清清楚楚，大家安心滿意」！這種從頭到尾的透明，就是要贏得你的信任，讓學生會真正成為一個值得託付的組織！</p>
+
+            <h3>超越傳統！打造有教育意義的校園文化！</h3>
+            <p>除了基本服務，Puerto 內閣更渴望成為校園文化的引領者和傳承者。丁靜雯認為，學生會是「校園文化的傳承者」，他們將舉辦多元化的校內、校外和聯校活動，讓同學們留下珍貴的校園回憶，同時增強對學校的歸屬感。</p>
+            <p>吳佳艷透露，他們正在籌備一系列「突破傳統」的活動，例如廚藝大賽、攝影比賽和電競聯賽等。更重要的是，這些活動都會以「博愛行仁、省善修德」為核心價值，鼓勵同學們在課本之外學習新技能，促進「多元發展」和「自主學習」。這不只是一場比賽，更是一次學習與成長的體驗！</p>
+
+            <p class="text-right">你的選擇，定義校園新篇章！</p>
+            <p class="text-right">採訪主編：蔡銘軒</p>
+            <p class="text-right">足本版，不日奉上！</p>
+        </div>
+    </div>
+</body>
+</html>
